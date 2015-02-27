@@ -2,6 +2,17 @@
 OSCAR McMaster Project
 ======================
 
+-------
+Vagrant
+-------
+
+vagrant up
+vagrant ssh
+cd /vagrant
+sudo ./finish.sh
+
+and then point your browser at https://localhost:8443/oscar
+
 ------------
 Requirements  
 ------------
