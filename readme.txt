@@ -6,10 +6,29 @@ OSCAR McMaster Project
 Vagrant
 -------
 
+```
 vagrant up
 vagrant ssh
 cd /vagrant
 sudo ./finish.sh
+```
+
+note the mysql password you choose and the oscar password which will probably be  (user: oscardoc, password: mac2002, pin: 1117)
+
+and then point your browser at https://localhost:8443/oscar to make sure the binary install works.   It'll force you to change your oscar password.
+
+build from source, and then replace with new artifacts:
+
+```
+mvn package -Dmaven.test.skip=true
+vi /vagrant/catalina_base/webapps/oscar/WEB-INF/classes/oscar_mcmaster.properties # and change db_password to your mysql password
+cd /var/lib/tomcat7/webapps
+sudo mv oscar oscar.old
+sudo mv oscar.war oscar.war.old
+sudo ln -s /vagrant/target/oscar-14.0.0-SNAPSHOT.war oscar.war
+sudo ln -s /vagrant/catalina_base/webapps/oscar .
+sudo service tomcat7 restart
+```
 
 and then point your browser at https://localhost:8443/oscar
 

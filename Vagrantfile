@@ -9,9 +9,11 @@ shopt -s failglob
 set -o xtrace
 
 export DEBIAN_FRONTEND=noninteractive
-wget --no-check-certificate https://github.com/aglover/ubuntu-equip/raw/master/equip_java8.sh && bash equip_java8.sh
-sudo apt-get install -y tomcat7 libmysql-java curl
-sed -i 's|\#JAVA_HOME=.*|JAVA_HOME=/usr/lib/jvm/java-8-oracle|' /etc/default/tomcat7 
+apt-get update
+apt-get install -y curl wkhtmltopdf
+wget --no-check-certificate https://github.com/aglover/ubuntu-equip/raw/master/equip_java7_64.sh && bash equip_java7_64.sh
+sudo apt-get install -y tomcat7 libmysql-java curl maven curl wkhtmltopdf
+sed -i 's|\#JAVA_HOME=.*|JAVA_HOME=/usr/lib/jvm/jdk1.7.0_65|' /etc/default/tomcat7
 
 SCRIPT
 
@@ -31,7 +33,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.provider "lxc" do |lxc, override|
     override.vm.box = "fgrehm/trusty64-lxc"
-    if LXC_VERSION != '1.0.6'
+    if LXC_VERSION >= '1.1.0'
       lxc.customize 'aa_allow_incomplete', '1'
     end
   end
